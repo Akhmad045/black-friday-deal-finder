@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DealHound — Real Black Friday Deals, Checked 27 Nov 2026</title>
+<meta name="description" content="21 real Black Friday deals, each checked at its store on 27 Nov 2026. Search, filter and sort — with an honest verdict on whether each deal is really a deal.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">DH</span>
+      <div>
+        <h1>DealHound</h1>
+        <p class="tagline">Real Black Friday deals, sniffed out and checked by hand.</p>
+      </div>
+    </div>
+    <div class="countdown" id="countdown" aria-live="off">
+      <span class="cd-label">Cyber Monday ends in</span>
+      <span class="cd-time" id="cd-time">—</span>
+    </div>
+  </div>
+</header>
+
+<div class="stats wrap" id="stats">
+  <div class="stat"><strong>21</strong><span>deals checked</span></div>
+  <div class="stat"><strong>6</strong><span>stores</span></div>
+  <div class="stat"><strong>$4,632.96</strong><span>total savings</span></div>
+  <div class="stat"><strong>27 Nov 2026</strong><span>checked today</span></div>
+</div>
+
+<main class="wrap">
+  <section class="toolbar" aria-label="Find a deal">
+    <input id="q" type="search" placeholder="Search deals — try “headphones”, “LEGO”, “TV”…" autocomplete="off" aria-label="Search deals">
+    <div class="cats" id="cats" role="group" aria-label="Category"></div>
+    <div class="selects">
+      <label>Store
+        <select id="store" aria-label="Filter by store">
+          <option value="">All stores</option>
+        </select>
+      </label>
+      <label>Discount
+        <select id="discount" aria-label="Filter by discount">
+          <option value="0">Any discount</option>
+          <option value="20">20% off or more</option>
+          <option value="30">30% off or more</option>
+          <option value="50">50% off or more</option>
+        </select>
+      </label>
+      <label>Sort
+        <select id="sort" aria-label="Sort deals">
+          <option value="pct">Biggest % off first</option>
+          <option value="save">Biggest $ saving first</option>
+          <option value="price-asc">Lowest price first</option>
+          <option value="price-desc">Highest price first</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <p class="count" id="count" aria-live="polite"></p>
+
+  <section id="grid" class="grid" aria-label="Deals"></section>
+
+  <section id="detail" class="detail" hidden aria-label="Deal detail"></section>
+
+  <section class="legend" aria-label="How to read a verdict">
+    <h2>Is it really a deal?</h2>
+    <p>Every deal on this page was checked at its store on 27 Nov 2026. The badge on each card is our honest read:</p>
+    <ul>
+      <li><span class="badge v-newlow">NEW LOW</span> — the lowest price any tracker has seen for this product.</li>
+      <li><span class="badge v-strong">STRONG</span> — 30% off or more, or $100+ saved. A genuine bargain.</li>
+      <li><span class="badge v-good">GOOD</span> — 15–30% off. Worth buying if you wanted it anyway.</li>
+      <li><span class="badge v-routine">ROUTINE</span> — under 15% off. A real cut, but not a reason to rush.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <h2>How we check</h2>
+    <p>Each price was checked on 27 Nov 2026 against the store's own product page, or a deals source
+    naming that store. The sale price, the usual price and the store link are shown on every card, so
+    you can verify the deal yourself before you buy. Prices change fast on Black Friday weekend — the
+    store's price at checkout is the final word. DealHound is an independent guide and is not
+    affiliated with any store named here.</p>
+    <p class="fine">All prices in US dollars. DealHound · Black Friday 2026 · Prices checked 27 Nov 2026.</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
