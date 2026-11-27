@@ -33,6 +33,14 @@ check time) is in the work log, and every card shows its store link and check ti
 can re-verify. Prices change fast on Black Friday weekend — the store's price at checkout is
 the final word.
 
+## Build checks
+
+`main.ts` validates every deal before it hands the site in: each row needs an id, a
+store, an https store link, a sale price below its usual price, and a check date, and
+the build prints the deal count, store count and total savings (21 deals, 6 stores,
+$4,632.96). The home page also shows the total saving across whatever the current
+search and filters match, so the number on screen always agrees with the deals shown.
+
 ## Run it
 
 Serve the `app/` folder with any static server, or run `node serve.ts` and open

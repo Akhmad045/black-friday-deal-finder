@@ -132,6 +132,7 @@
       list.forEach(function (d) { els.grid.appendChild(makeCard(d)); });
     }
     var total = DEALS.length;
+    var saved = list.reduce(function (sum, d) { return sum + (d.usual - d.sale); }, 0);
     els.count.innerHTML = "";
     var strong = document.createElement("strong");
     strong.textContent = list.length + " of " + total + " deals";
@@ -140,6 +141,9 @@
       list.length === total
         ? " — sorted by " + sortLabel() + "."
         : " match your filters — sorted by " + sortLabel() + "."
+    ));
+    els.count.appendChild(document.createTextNode(
+      " You'd save $" + saved.toFixed(2) + " across " + (list.length === 1 ? "this deal." : "these deals.")
     ));
   }
 

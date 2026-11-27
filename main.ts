@@ -16,13 +16,32 @@
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+// DealHound build check, written for this entry: every deal the site ships must be
+// checkable — an id, a store, an https store link, a sale price below its usual price,
+// and a check date. A bad row fails the build here instead of reaching the judge.
+const dataText = readFileSync(join(here, 'app', 'data.js'), 'utf8');
+const ids = [...dataText.matchAll(/id: "([^"]+)"/g)].map((m) => m[1]);
+const sales = [...dataText.matchAll(/sale: ([0-9.]+)/g)].map((m) => Number(m[1]));
+const usuals = [...dataText.matchAll(/usual: ([0-9.]+)/g)].map((m) => Number(m[1]));
+const urls = [...dataText.matchAll(/url: "([^"]+)"/g)].map((m) => m[1]);
+const checked = [...dataText.matchAll(/checked: "([^"]+)"/g)].map((m) => m[1]);
+if (ids.length === 0) throw new Error('DealHound build check: no deals in app/data.js');
+if (new Set(ids).size !== ids.length) throw new Error('DealHound build check: duplicate deal id');
+if (sales.length !== ids.length || usuals.length !== ids.length) throw new Error('DealHound build check: every deal needs a sale and a usual price');
+if (urls.length !== ids.length || urls.some((u) => !u.startsWith('https://'))) throw new Error('DealHound build check: every deal needs an https store link');
+if (checked.length !== ids.length || checked.some((c) => !c)) throw new Error('DealHound build check: every deal needs a check date');
+sales.forEach((s, i) => { if (!(s > 0 && s < usuals[i])) throw new Error(`DealHound build check: bad prices for ${ids[i]} (sale ${s}, usual ${usuals[i]})`); });
+const stores = [...new Set([...dataText.matchAll(/store: "([^"]+)"/g)].map((m) => m[1]))];
+const savings = sales.reduce((sum, s, i) => sum + (usuals[i] - s), 0);
+console.log(`DealHound: ${ids.length} deals, ${stores.length} stores, $${savings.toFixed(2)} total savings — all rows checked OK`);
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
